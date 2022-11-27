@@ -19,9 +19,13 @@
   },
   "homepage": "https://github.com/w3dani/integrations-functions-poc#readme",
   "dependencies": {
-    "awilix": "^8.0.0"
+    "awilix": "^8.0.0",
+    "pino": "^8.7.0"
   },
   "devDependencies": {
+    "eslint": "^8.28.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
     "serverless-localstack": "^1.0.1"
   }
 }

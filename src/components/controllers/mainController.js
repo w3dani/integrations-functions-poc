@@ -1,12 +1,12 @@
-const mainController = () => {
-    const getRandomValue = () => {
-        console.log('get random value');
-        return `random value = ${Math.random() * 100}`;
-    }
+class MainController {
+  constructor({ logger }) {
+    this.logger = logger;
+  }
 
-    return {
-        getRandomValue
-    }
+  getRandomValue = () => {
+    this.logger.info('get random value');
+    return `random value = ${Math.random() * 100}`;
+  };
 }
 
-module.exports = mainController;
+module.exports = MainController;
