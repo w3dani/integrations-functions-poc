@@ -15,8 +15,8 @@ provider:
   memorySize: 256
 
 functions:
-  hello:
-    handler: src/handlers/main.handler
+  sampleFunction:
+    handler: src/handlers/sampleFunction.handler
 
 plugins:
   - serverless-localstack

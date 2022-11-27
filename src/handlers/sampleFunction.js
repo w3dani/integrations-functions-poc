@@ -4,7 +4,7 @@ module.exports.handler = async (event) => {
   const {
     cradle: {
       logger,
-      mainController,
+      sampleController,
     },
   } = await initContainer();
 
@@ -16,7 +16,7 @@ module.exports.handler = async (event) => {
       {
         message: 'Go Serverless v3.0! Your function executed successfully!',
         input: event,
-        data: mainController.getRandomValue(),
+        data: sampleController.mergeName(event.first_name, event.last_name),
       },
       null,
       2,
