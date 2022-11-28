@@ -1,72 +1,34 @@
-<!--
-title: 'AWS NodeJS Example'
-description: 'This template demonstrates how to deploy a NodeJS function running on AWS Lambda using the traditional Serverless Framework.'
-layout: Doc
-framework: v3
-platform: AWS
-language: nodeJS
-priority: 1
-authorLink: 'https://github.com/serverless'
-authorName: 'Serverless, inc.'
-authorAvatar: 'https://avatars1.githubusercontent.com/u/13742415?s=200&v=4'
--->
+# Serverless AWS Lambda Quickstart with NodeJS and Dependency Injection
 
+This template demonstrates how to deploy a NodeJS function running on AWS Lambda using the traditional Serverless Framework.
 
-# Serverless Framework AWS NodeJS Example
+On the other hand, this example has been built using [awilix](https://github.com/jeffijoe/awilix) npm package in order to support Dependency Injection in a similar way as we used to do with [systemic](https://github.com/guidesmiths/systemic).
 
-This template demonstrates how to deploy a NodeJS function running on AWS Lambda using the traditional Serverless Framework. The deployed function does not include any event definitions as well as any kind of persistence (database). For more advanced configurations check out the [examples repo](https://github.com/serverless/examples/) which includes integrations with SQS, DynamoDB or examples of functions that are triggered in `cron`-like manner. For details about configuration of specific `events`, please refer to our [documentation](https://www.serverless.com/framework/docs/providers/aws/events/).
+The main features implemented in this template are:
+1. components. Injectable pieces of code with their own unit tests:
+- logging injectable component (using pino library)
+- config injectable component (but global, not scoped to a component)
+- sample controller injectable component
+
+2. handlers. handlers for events that trigger lambdas.
+- sns sample handler
+- http sample handler
+- schemas. for input schema validation
+- utils. standard http response generator
+
+3. serverless. basic serverless config
+- support for .env file
+- support for localstack infra
+
+4. other. this could be removed in template in case we integrate with tools like cuckoojs
+- eslint
+- gitignore
+- a folder with fixtures for local development
+- more features could be added like husky, but let's see what is implemented here and what in a final template
 
 ## Usage
 
-### Deployment
-
-In order to deploy the example, you need to run the following command:
-
-```
-$ serverless deploy
-```
-
-After running deploy, you should see output similar to:
-
-```bash
-Deploying aws-node-project to stage dev (us-east-1)
-
-✔ Service deployed to stack aws-node-project-dev (112s)
-
-functions:
-  hello: aws-node-project-dev-hello (1.5 kB)
-```
-
-### Invocation
-
-After successful deployment, you can invoke the deployed function by using the following command:
-
-```bash
-serverless invoke --function hello
-```
-
-Which should result in response similar to the following:
-
-```json
-{
-    "statusCode": 200,
-    "body": "{\n  \"message\": \"Go Serverless v3.0! Your function executed successfully!\",\n  \"input\": {}\n}"
-}
-```
-
-### Local development
-
-You can invoke your function locally by using the following command:
-
-```bash
-serverless invoke local --function hello
-```
-
-Which should result in response similar to the following:
-
-```
-{
-    "statusCode": 200,
-    "body": "{\n  \"message\": \"Go Serverless v3.0! Your function executed successfully!\",\n  \"input\": \"\"\n}"
-}
-```
+In order to test it locally:
+1. Setup local infra: `npm run infra:up`
+2. Create your `.env` file based on the `.env.sample` file
+3. run `FUNCTION=functionName INPUT=fixtureName npm run invoke:local`
