@@ -18,7 +18,13 @@ class Logger {
     },
   });
 
+  debug = (message, data) => this.pinoLogger.debug({ msg: message, data });
+
   info = (message, data) => this.pinoLogger.info({ msg: message, data });
+
+  warn = (message, data) => this.pinoLogger.warn({ msg: message, data });
+
+  error = (message, data) => this.pinoLogger.error({ msg: message, data });
 }
 
 module.exports = Logger;

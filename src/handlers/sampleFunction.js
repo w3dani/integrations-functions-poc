@@ -1,25 +1,30 @@
 const { initContainer } = require('../components/container');
+const extractPayload = require('./utils/extractPayload');
+const sampleSchema = require('./schemas/sample');
+const httpResponse = require('./utils/httpResponse');
+
+const {
+  cradle: {
+    logger, sampleController,
+  },
+} = initContainer();
 
 module.exports.handler = async (event) => {
-  const {
-    cradle: {
-      logger,
-      sampleController,
-    },
-  } = await initContainer();
-
   logger.info('function invoked', event);
-
-  return {
-    statusCode: 200,
-    body: JSON.stringify(
-      {
-        message: 'Go Serverless v3.0! Your function executed successfully!',
-        input: event,
-        data: sampleController.mergeName(event.first_name, event.last_name),
-      },
-      null,
-      2,
-    ),
-  };
+  let input;
+  try {
+    input = extractPayload.fromSNS(event);
+    const { ok, errors } = sampleSchema.validate(input);
+    if (!ok) throw new Error(JSON.stringify(errors));
+  } catch (err) {
+    logger.error('invalid input', { err });
+    return httpResponse.error(err.message, 400);
+  }
+  try {
+    const output = sampleController.mergeName(input.first_name, input.last_name);
+    return httpResponse.ok(output);
+  } catch (err) {
+    logger.error('could not complete function', { err });
+    return httpResponse.error(err.message);
+  }
 };

@@ -2,7 +2,7 @@ const awilix = require('awilix');
 
 let container;
 
-const initContainer = async () => {
+const initContainer = () => {
   if (!container) {
     container = awilix.createContainer({
       injectionMode: awilix.InjectionMode.PROXY,
